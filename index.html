@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Shape-repo by CooperCorona</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Shape-repo</h1>
+        <h2>Different shapes for use with collision detection</h2>
+        <a href="https://github.com/CooperCorona/Shape-Repo" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>Variety of classes defining different shapes used for collision detection.</p>
+
+<h3>
+<a name="csshape" class="anchor" href="#csshape"><span class="octicon octicon-link"></span></a>CSShape</h3>
+
+<p>Don’t use CSShape directly; it is abstract.</p>
+
+<p>If you wish to make a subclass of CSShape, you must override these methods:</p>
+
+<pre><code>-[transpose:]
+</code></pre>
+
+<p>which takes a CGPoint as an argument and moves
+the shape according to the x and y values of the point.</p>
+
+<pre><code>-[pointLiesInside:]
+</code></pre>
+
+<p>which returns a boolean that states whether
+a given point lies inside (or on) the shape.</p>
+
+<pre><code>-[getRandomPoint]
+</code></pre>
+
+<p>which returns a random point inside/on the shape.
+(This method is optional, it always returns
+{0, 0} if you do not override it).</p>
+
+<h3>
+<a name="csshapegroup" class="anchor" href="#csshapegroup"><span class="octicon octicon-link"></span></a>CSShapeGroup</h3>
+
+<p>CSShapeGroup contains an array of shapes that can be
+tested against other shape groups. For example, you
+could define a group comprised of two separate circles,
+and if either of them trigger a collision, the shape
+group will detect it.</p>
+
+<p>Change the ‘center’ property to move the shape group.
+However, shape groups initially start at point {0, 0}.
+All shapes are therefore anchored as they were before
+being in a shape group. So setting a group’s center to
+{20, 20} will change a circle initially centered at
+{10, 10} to be centered at {30, 30}.</p>
+
+<h3>
+<a name="cspoint" class="anchor" href="#cspoint"><span class="octicon octicon-link"></span></a>CSPoint</h3>
+
+<p>CSPoint defines a point in space. CSPoints only
+collide with other shapes if the point lies inside
+the shape (or in the case of a point, they must
+occupy the same point).</p>
+
+<h3>
+<a name="cslinesegment" class="anchor" href="#cslinesegment"><span class="octicon octicon-link"></span></a>CSLineSegment</h3>
+
+<p>CSLineSegment defines a line segment. When
+instantiating a line segment, pass in the
+two endpoints of the line segment.</p>
+
+<p>The 'vertical'  property is a boolean that states
+whether the line segment is completely vertical
+(it's two points have the same x-values and
+thus it has a slope of infinity).</p>
+
+<pre><code>-[getSlope]
+</code></pre>
+
+<p>returns the slope of the line. If the 'vertical' property
+is true (or YES), then it returns 0 (instead of infinity).</p>
+
+<pre><code>-[getYIntercept]
+</code></pre>
+
+<p>returns the y-intercept of the line. If the segment
+does not cross the y-axis, then it returns the
+value as if the segment extended that far.</p>
+
+<pre><code>-[getYforX]
+-[getXforY]
+</code></pre>
+
+<p>return the y-value and x-value for the corresponding
+x-value and y-value, respectively. If the given x-value
+or y-value is not on the segment, then they return
+the values as if the segment extended to those points.</p>
+
+<h3>
+<a name="csrectangle" class="anchor" href="#csrectangle"><span class="octicon octicon-link"></span></a>CSRectangle</h3>
+
+<p>CSRectangle defines a rectangle.</p>
+
+<p>You can access the line segments that
+comprise the rectangle with</p>
+
+<pre><code>-[getLineSegments]
+</code></pre>
+
+<h3>
+<a name="cstriangle" class="anchor" href="#cstriangle"><span class="octicon octicon-link"></span></a>CSTriangle</h3>
+
+<p>CSTriangle defines a triangle.</p>
+
+<p>You can access the line segments that
+comprise the triangle with</p>
+
+<pre><code>-[getLineSegments]
+</code></pre>
+
+<h3>
+<a name="cscircle" class="anchor" href="#cscircle"><span class="octicon octicon-link"></span></a>CSCircle</h3>
+
+<p>CSCircle defines a circle.</p>
+
+<pre><code>    -[getPositiveYforX:]
+    -[getNegativeYforX:]
+</code></pre>
+
+<p>return the y-value corresponding to the given
+x-value. They return 0 if the x-value is invalid.</p>
+
+<pre><code>    -[getPositiveXForY:]
+    -[getNegativeXForY:]
+</code></pre>
+
+<p>return the x-value corresponding to the given
+y-value. They return 0 if the y-value is invalid.</p>
+
+<pre><code>    -[getPointForAngle:]
+</code></pre>
+
+<p>returns the point on the circle
+corresponding to the given angle.</p>
+
+<h3>
+<a name="csellipse" class="anchor" href="#csellipse"><span class="octicon octicon-link"></span></a>CSEllipse</h3>
+
+<p>CSEllipse defines an ellipse (oval).</p>
+
+<pre><code>    -[getPositiveYforX:]
+    -[getNegativeYforX:]
+</code></pre>
+
+<p>return the y-value corresponding to the given
+x-value. They return 0 if the x-value is invalid.</p>
+
+<pre><code>    -[getPositiveXForY:]
+    -[getNegativeXForY:]
+</code></pre>
+
+<p>return the x-value corresponding to the given
+y-value. They return 0 if the y-value is invalid.</p>
+
+<pre><code>    -[getPointForAngle:]
+</code></pre>
+
+<p>returns the point on the ellipse
+corresponding to the given angle.</p>
+
+<h3>
+<a name="note-about-ellipses" class="anchor" href="#note-about-ellipses"><span class="octicon octicon-link"></span></a>Note about Ellipses</h3>
+
+<p>Collision detection for ellipses against
+other ellipses is not quite perfect.</p>
+
+<p>I’ve yet to find a mathematical formula
+determining collision detection, so I just test
+the far left, middle, and far right of the
+overlapping portions of the ellipse (if the far
+left of the first ellipse is greater than the
+far left of the second ellipse, but vice-versa
+for the far right, then they collide, and etc.).
+This seems to work appropriately, but I'd like
+to perfect it.</p>
+
+<p>If anyone figures out an exact formula for collision
+of two ellipses, then I would gladly update the code
+along with proper attribution.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/CooperCorona/Shape-Repo/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/CooperCorona/Shape-Repo/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/CooperCorona/Shape-Repo"></a> is maintained by <a href="https://github.com/CooperCorona">CooperCorona</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
